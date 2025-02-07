@@ -10,12 +10,21 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "body": "^5.1.0",
+>>>>>>> 33e65b6fd29a57e43c9a5a01e1d29f9d08c6bcbd
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.9.6",
+<<<<<<< HEAD
     "swagger": "^0.0.1",
+=======
+    "parser": "^0.1.4",
+    "swagger": "^0.7.5",
+>>>>>>> 33e65b6fd29a57e43c9a5a01e1d29f9d08c6bcbd
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   }
