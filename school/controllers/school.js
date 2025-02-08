@@ -1,5 +1,5 @@
 const express = require('express');
-const Student = require('../models/student'); // Import the Student model
+const School = require('../models/student'); // Import the Student model
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 
@@ -11,29 +11,29 @@ router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 router.get('/', async (req, res) => {
     try {
-        const students = await Student.find(); // Fetch all students from the database
-        res.json(students); // Send the students as a JSON response
+        const school = await Student.find(); // Fetch all students from the database
+        res.json(school); // Send the students as a JSON response
     } catch (err) {
         res.status(500).json({ message: err.message }); // Send a 500 error if something goes wrong
     }
 });
 
 // Get one student by ID
-router.get('/:id', getStudent, (req, res) => {
+router.get('/:id', getschool, (req, res) => {
     res.json(res.student); // Send the found student as a JSON response
 });
 
 // Create a new student
 router.post('/', async (req, res) => {
-    const student = new Student({
+    const school = new school({
         name: req.body.name, // Set the student's name from the request body
-        age: req.body.age, // Set the student's age from the request body
-        grade: req.body.grade // Set the student's grade from the request body
+        location: req.body.location, // Set the student's age from the request body
+        district: req.body.destrict // Set the student's grade from the request body
     });
 
     try {
-        const newStudent = await student.save(); // Save the new student to the database
-        res.status(201).json(newStudent); // Send the created student as a JSON response with a 201 status
+        const school = await school.save(); // Save the new student to the database
+        res.status(201).json(newSchool); // Send the created student as a JSON response with a 201 status
     } catch (err) {
         res.status(400).json({ message: err.message }); // Send a 400 error if something goes wrong
     }
@@ -41,30 +41,30 @@ router.post('/', async (req, res) => {
 
 
 // Update an existing student by ID
-router.patch('/:id', getStudent, async (req, res) => {
+router.patch('/:id', getSchool, async (req, res) => {
     if (req.body.name != null) {
-        res.student.name = req.body.name; // Update the student's name if provided
+        res.school.name = req.body.name; // Update the student's name if provided
     }
-    if (req.body.age != null) {
-        res.student.age = req.body.age; // Update the student's age if provided
+    if (req.body.location != null) {
+        res.school.location = req.body.age; // Update the student's age if provided
     }
-    if (req.body.grade != null) {
-        res.student.grade = req.body.grade; // Update the student's grade if provided
+    if (req.body.district != null) {
+        res.student.district = req.body.grade; // Update the student's grade if provided
     }
 
     try {
-        const updatedStudent = await res.student.save(); // Save the updated student to the database
-        res.json(updatedStudent); // Send the updated student as a JSON response
+        const updatedSchool = await res.student.save(); // Save the updated student to the database
+        res.json(updatedSchool); // Send the updated student as a JSON response
     } catch (err) {
         res.status(400).json({ message: err.message }); // Send a 400 error if something goes wrong
     }
 });
 
 // Delete a student by ID
-router.delete('/:id', getStudent, async (req, res) => {
+router.delete('/:id', getSchool, async (req, res) => {
     try {
-        await res.student.remove(); // Remove the student from the database
-        res.json({ message: 'Deleted Student' }); // Send a success message as a JSON response
+        await res.school.remove(); // Remove the student from the database
+        res.json({ message: 'Deleted School' }); // Send a success message as a JSON response
     } catch (err) {
         res.status(500).json({ message: err.message }); // Send a 500 error if something goes wrong
     }
@@ -72,17 +72,17 @@ router.delete('/:id', getStudent, async (req, res) => {
 
 // Middleware function to get a student by ID
 async function getStudent(req, res, next) {
-    let student;
+    let school;
     try {
-        student = await Student.findById(req.params.id); // Find the student by ID
-        if (student == null) {
+        student = await School.findById(req.params.id); // Find the student by ID
+        if (school == null) {
             return res.status(404).json({ message: 'Cannot find student' }); // Send a 404 error if the student is not found
         }
     } catch (err) {
         return res.status(500).json({ message: err.message }); // Send a 500 error if something goes wrong
     }
 
-    res.student = student; // Attach the found student to the response object
+    res.student = school; // Attach the found student to the response object
     next(); // Move to the next middleware or route handler
 }
 
