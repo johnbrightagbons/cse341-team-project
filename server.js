@@ -25,7 +25,12 @@ const swaggerOptions = {
             }
         ]
     },
+<<<<<<< HEAD
     apis: ['./school/routes/*.js']
+=======
+    apis: ['./school/routes/school.js']
+
+>>>>>>> a55027dc000feb9b2497f133bc499c3dad27f042
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
@@ -38,6 +43,7 @@ app.get('/', (req, res) => {
     res.send('Welcome to the school API!');
 });
 
+<<<<<<< HEAD
 initDb((err) => {
     if (err) {
         console.error('Failed to initialize database', err);
@@ -46,3 +52,18 @@ initDb((err) => {
         app.listen(port, () => console.log(`School API running on Port ${port}`));
     }
 });
+=======
+const { initDb } = require('./school/data/database'); // Import the initDb function
+
+// Initialize the database
+initDb((err, db) => {
+    if (err) {
+        console.error('Failed to connect to the database:', err);
+        process.exit(1); // Exit the process if the database connection fails
+    }
+
+    // Start the server and listen on the specified port
+    const PORT = process.env.PORT || 8080;
+    app.listen(PORT, () => console.log(`School API running on Port ${PORT}`));
+});
+>>>>>>> a55027dc000feb9b2497f133bc499c3dad27f042
