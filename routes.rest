@@ -1,0 +1,13 @@
+http://localhost:8080/students
+
+### Get all students
+GET http://localhost:8080/students
+
+### Add a new student
+POST http://localhost:8080/students
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "age": 20
+}
