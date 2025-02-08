@@ -4,7 +4,8 @@ http://localhost:8080/students
 GET http://localhost:8080/students
 
 ### Add a new student
-POST http://localhost:8080/students
+
+POST http://localhost:8080/students HTTP/1.1
 Content-Type: application/json
 
 {

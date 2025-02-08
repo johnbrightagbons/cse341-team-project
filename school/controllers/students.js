@@ -1,4 +1,5 @@
 const { getDb } = require('../data/database');
+const mongodb = require('../data/database');
 const { ObjectId } = require('mongodb');
 
 // Controller function to get all students
