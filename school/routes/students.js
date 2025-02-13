@@ -1,11 +1,11 @@
 const express = require('express');
-const { getAllStudents, getOneStudent, addStudent } = require('../controllers/students');
-
 const router = express.Router();
+const { getAllStudents, getStudent, createStudent, updateStudent, deleteStudent } = require('../controllers/students');
 
-// Define the routes and associate them with the controller functions
+
+
 router.get('/', getAllStudents);
-router.get('/:id', getOneStudent);
-router.post('/', addStudent);
-
-module.exports = router;
+router.get('/:id', getStudent);
+router.post('/', createStudent);
+router.put('/:id', updateStudent);
+router.delete('/:id', deleteStudent);

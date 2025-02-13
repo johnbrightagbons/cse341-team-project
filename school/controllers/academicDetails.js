@@ -17,7 +17,7 @@ const getStudentDetails = async (req, res, next) => {
         const db = mongodb.getDatabase();
         const details = await db.collection('details').findOne({ _id: studentId });
 
-        if (!details) {  // ✅ FIXED: Was incorrectly checking `order`
+        if (!details) {  
             return res.status(404).json({ message: 'Details not found' });
         }
 
