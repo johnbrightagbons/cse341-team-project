@@ -31,9 +31,9 @@ const createDetails = async (req, res, next) => {
     const details = {
         major: req.body.major,
         minor: req.body.minor,
-        faculty: req.body.faculty, // ✅ FIXED spelling mistake
+        faculty: req.body.faculty, 
         gpa: req.body.gpa,
-        enrollmentStatus: req.body.enrollmentStatus, // ✅ FIXED incorrect mapping
+        enrollmentStatus: req.body.enrollmentStatus, 
         admissionDate: req.body.admissionDate,
     };
 
@@ -56,7 +56,7 @@ const updateDetails = async (req, res, next) => {
     const updateDetails = {
         major: req.body.major,
         minor: req.body.minor,
-        faculty: req.body.faculty, // ✅ FIXED spelling mistake
+        faculty: req.body.faculty, 
         gpa: req.body.gpa,
         enrollmentStatus: req.body.enrollmentStatus, // ✅ FIXED incorrect mapping
         admissionDate: req.body.admissionDate,
