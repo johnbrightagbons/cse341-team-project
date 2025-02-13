@@ -1,8 +1,7 @@
 const { ObjectId } = require('mongodb');
 const mongodb = require('../data/database');
 
-
-const getAllDetails= async (req, res, next) => {
+const getAllDetails = async (req, res, next) => {
     try {
         const db = mongodb.getDatabase();
         const details = await db.collection('details').find().toArray();
@@ -18,8 +17,8 @@ const getStudentDetails = async (req, res, next) => {
         const db = mongodb.getDatabase();
         const details = await db.collection('details').findOne({ _id: studentId });
 
-        if (!order) {
-            return res.status(404).json({ message: 'Order not found' });
+        if (!details) {  // ✅ FIXED: Was incorrectly checking `order`
+            return res.status(404).json({ message: 'Details not found' });
         }
 
         res.status(200).json(details);
@@ -28,14 +27,13 @@ const getStudentDetails = async (req, res, next) => {
     }
 };
 
-const createDetails  = async (req, res, next) => {
-
+const createDetails = async (req, res, next) => {
     const details = {
         major: req.body.major,
         minor: req.body.minor,
-        faculy: req.body.faculty,
+        faculty: req.body.faculty, // ✅ FIXED spelling mistake
         gpa: req.body.gpa,
-        enrollmentStatus: req.body.physicalAddress,
+        enrollmentStatus: req.body.enrollmentStatus, // ✅ FIXED incorrect mapping
         admissionDate: req.body.admissionDate,
     };
 
@@ -46,7 +44,7 @@ const createDetails  = async (req, res, next) => {
         if (response.acknowledged) {
             res.status(201).json({ _id: response.insertedId, ...details });
         } else {
-            res.status(500).json({ message: "Error creating a academic details..." });
+            res.status(500).json({ message: "Error creating academic details..." });
         }
     } catch (err) {
         next(err);
@@ -54,14 +52,13 @@ const createDetails  = async (req, res, next) => {
 };
 
 const updateDetails = async (req, res, next) => {
-    
     const studentId = new ObjectId(req.params.id);
     const updateDetails = {
         major: req.body.major,
         minor: req.body.minor,
-        faculy: req.body.faculty,
+        faculty: req.body.faculty, // ✅ FIXED spelling mistake
         gpa: req.body.gpa,
-        enrollmentStatus: req.body.physicalAddress,
+        enrollmentStatus: req.body.enrollmentStatus, // ✅ FIXED incorrect mapping
         admissionDate: req.body.admissionDate,
     };
 
@@ -80,16 +77,15 @@ const updateDetails = async (req, res, next) => {
 };
 
 const deleteDetails = async (req, res, next) => {
-
     try {
         const studentId = new ObjectId(req.params.id);
         const db = mongodb.getDatabase();
-        const response = await db.collection('students').deleteOne({ _id: studentId });
+        const response = await db.collection('details').deleteOne({ _id: studentId }); // ✅ FIXED wrong collection name
 
         if (response.deletedCount > 0) {
             res.status(204).send();
         } else {
-            res.status(404).json({ message: "Details  not found." });
+            res.status(404).json({ message: "Details not found." });
         }
     } catch (err) {
         next(err);
@@ -102,4 +98,4 @@ module.exports = {
     createDetails,
     updateDetails,
     deleteDetails
-}
+};
