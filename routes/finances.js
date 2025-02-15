@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getAllFinances, getFinances, createFinances, updateFinances, deleteFinances } = require('../controller/finaces');
+const { getAllFinances, getFinances, createFinances, updateFinances, deleteFinances } = require('../controllers/finances');
 
 
 
