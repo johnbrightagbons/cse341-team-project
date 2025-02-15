@@ -9,3 +9,5 @@ router.get('/:id', getFinances);
 router.post('/', createFinances);
 router.put('/:id', updateFinances);
 router.delete('/:id', deleteFinances);
+
+module.exports = router;

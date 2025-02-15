@@ -10,3 +10,5 @@ router.get('/:id', getClassInfo);
 router.post('/', createClassInfo);
 router.put('/:id', updateClassInfo);
 router.delete('/:id', deleteClassInfo);
+
+module.exports = router;

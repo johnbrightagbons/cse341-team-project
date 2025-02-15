@@ -9,3 +9,5 @@ router.get('/:id', getStudentDetails);
 router.post('/', createDetails);
 router.put('/:id', updateDetails);
 router.delete('/:id', deleteDetails);
+
+module.exports = router;
