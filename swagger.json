@@ -5,7 +5,7 @@
       "description": "API for managing Academic Details, Class Info, Finances and Students",
       "version": "1.0.0"
     },
-    "host": "cse341project2-8qb2.onrender.com",
+    "host": "3000",
     "basePath": "/",
     "schemes": ["https"],
     "consumes": ["application/json"],
