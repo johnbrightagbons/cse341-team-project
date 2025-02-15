@@ -1,34 +1,35 @@
-const { MongoClient } = require('mongodb');
+const dotenv = require('dotenv');
+dotenv.config();
 
-let _db;
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
+let database;
+
+const initDb = (callback) => {
+    if (database) {
+        console.log('Db is already initialized');
+        return callback(null, database);
+    }
+    MongoClient.connect(process.env.MONGODB_URL)
+        .then(client => {
+            console.log('Connected to MongoDB');
+            database = client.db(process.env.project2);
+            callback(null, database);
+        })
+        .catch(err => {
+            console.error('Failed to connect to MongoDB', err);
+            callback(err);
+        });
+};
+
+const getDatabase = () => {
+    if (!database) {
+        throw Error('Db is not initialized');
+    }
+    return database;
+};
 
 module.exports = {
-  initDb: (callback) => {
-    if (_db) {
-      console.warn("Database is already initialized!");
-      return callback(null, _db);
-    }
-
-    const connectionString = process.env.MONGODB_URL;
-    if (!connectionString) {
-      return callback(new Error("MONGODB_URL is not defined in the environment variables."));
-    }
-
-    MongoClient.connect(connectionString, { useUnifiedTopology: true })
-      .then(client => {
-        // Optionally, select a database if needed:
-        // _db = client.db(process.env.DB_NAME || 'default-db-name');
-        _db = client.db(); // Uses the database specified in the connection string
-        callback(null, _db);
-      })
-      .catch(err => {
-        callback(err);
-      });
-  },
-  getDb: () => {
-    if (!_db) {
-      throw Error("Database not initialized!");
-    }
-    return _db;
-  }
+    initDb,
+    getDatabase
 };
