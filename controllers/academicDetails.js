@@ -73,7 +73,7 @@ const updateDetails = async (req, res, next) => {
 
     try {
         const db = mongodb.getDatabase();
-        const response = await db.collection('academicdetails').updateOne(
+        const response = await db.collection('academicDetails').updateOne(
             { _id: studentId },
             { $set: updatedDetails }
         );
