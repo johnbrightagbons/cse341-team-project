@@ -1,16 +1,16 @@
 // LOCALHOST
 
 ### Get all academicDetails
-GET http://localhost:3000/academicDetails
+GET http://localhost:10000/academicDetails
 
 ### Get all  classInfo
-GET http://localhost:3000/classInfo
+GET http://localhost:10000/classInfo
 
 ### Get all finances 
-GET http://localhost:3000/finances
+GET http://localhost:1000/finances
 
 ### Get all students
-GET http://localhost:3000/students
+GET http://localhost:10000/students
 
 ### Get academicDetails by id 
 GET http://localhost:3000/academicDetails/67adeafa2a5892d7649e6508

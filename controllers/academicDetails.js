@@ -1,12 +1,12 @@
 const { ObjectId } = require('mongodb');
 const mongodb = require('../data/database');
-const { validateAcademicDetails, handleValidationErrors } = require('../middleware/validate');
+//const { validateAcademicDetails, handleValidationErrors } = require('../middleware/validate');
 
 const getAllDetails = async (req, res, next) => {
     try {
         const db = mongodb.getDatabase();
-        const details = await db.collection('details').find().toArray();
-        res.status(200).json(details);
+        const details = await db.collection('academicDetails').find().toArray();
+        res.status(200).json(academicdetails);
     } catch (err) {
         next(err);
     }
@@ -16,7 +16,7 @@ const getStudentDetails = async (req, res, next) => {
     try {
         const studentId = new ObjectId(req.params.id);
         const db = mongodb.getDatabase();
-        const details = await db.collection('details').findOne({ _id: studentId });
+        const details = await db.collection('academicDetails').findOne({ _id: studentId });
 
         if (!details) {
             return res.status(404).json({ message: 'Details not found' });
@@ -44,7 +44,7 @@ const createDetails = async (req, res, next) => {
 
     try {
         const db = mongodb.getDatabase();
-        const response = await db.collection('details').insertOne(details);
+        const response = await db.collection('academicDetails').insertOne(academicdetails);
 
         if (response.acknowledged) {
             res.status(201).json({ _id: response.insertedId, ...details });
@@ -73,7 +73,7 @@ const updateDetails = async (req, res, next) => {
 
     try {
         const db = mongodb.getDatabase();
-        const response = await db.collection('details').updateOne(
+        const response = await db.collection('academicdetails').updateOne(
             { _id: studentId },
             { $set: updatedDetails }
         );
@@ -92,7 +92,7 @@ const deleteDetails = async (req, res, next) => {
     try {
         const studentId = new ObjectId(req.params.id);
         const db = mongodb.getDatabase();
-        const response = await db.collection('details').deleteOne({ _id: studentId });
+        const response = await db.collection('academicDetails').deleteOne({ _id: studentId });
 
         if (response.deletedCount > 0) {
             res.status(204).send();
