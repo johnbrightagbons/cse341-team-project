@@ -2,10 +2,10 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
-const express = require('express');
+const express = require('express');const cors = require('cors');
 const mongoose = require('mongoose'); // Ensure mongoose is imported
 const bodyParser = require('body-parser');
-const cors = require('cors');
+
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const mongodb = require('./data/database');
@@ -18,7 +18,7 @@ const errorHandler = require('./middleware/errorHandler');
 const routes = require('./routes/index');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 // --- MIDDLEWARE SETUP --- //
 
