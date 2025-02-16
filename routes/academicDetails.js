@@ -6,11 +6,11 @@ const { getAllDetails, getStudentDetails, createDetails, updateDetails, deleteDe
 
 
 
-router.get('/', isAuthenticated, getAllDetails);
-router.get('/:id', isAuthenticated, getStudentDetails);
-router.post('/', isAuthenticated, createDetails);
-router.put('/:id', isAuthenticated, updateDetails);
-router.delete('/:id', isAuthenticated, deleteDetails);
+router.get('/',  getAllDetails);
+router.get('/:id',  getStudentDetails);
+router.post('/',  createDetails);
+router.put('/:id',  updateDetails);
+router.delete('/:id',  deleteDetails);
 
 
 module.exports = router;
