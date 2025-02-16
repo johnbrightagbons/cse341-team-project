@@ -42,6 +42,7 @@ mongoose.connect(process.env.MONGODB_URL)
 app.use(cors({
   origin: 'https://cse341-team-project-xt32.onrender.com', // adjust if your client is hosted elsewhere
   credentials: true,
+  llowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Session configuration using MongoDB as the store
