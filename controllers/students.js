@@ -1,12 +1,12 @@
 const { ObjectId } = require('mongodb');
 const mongodb = require('../data/database');
+const { validateStudent, handleValidationErrors } = require('../helpers/validate');
 
-
-const getAllStudents= async (req, res, next) => {
+const getAllStudents = async (req, res, next) => {
     try {
         const db = mongodb.getDatabase();
-        const orders = await db.collection('students').find().toArray();
-        res.status(200).json(orders);
+        const students = await db.collection('students').find().toArray();
+        res.status(200).json(students);
     } catch (err) {
         next(err);
     }
@@ -14,26 +14,29 @@ const getAllStudents= async (req, res, next) => {
 
 const getStudent = async (req, res, next) => {
     try {
-        const studentIdId = new ObjectId(req.params.id);
+        const studentId = new ObjectId(req.params.id);
         const db = mongodb.getDatabase();
-        const student = await db.collection('students').findOne({ _id: orderId });
+        const student = await db.collection('students').findOne({ _id: studentId });
 
-        if (!order) {
-            return res.status(404).json({ message: 'Student  not found' });
+        if (!student) {
+            return res.status(404).json({ message: 'Student not found' });
         }
 
-        res.status(200).json(order);
+        res.status(200).json(student);
     } catch (err) {
         next(err);
     }
 };
 
-const createStudent  = async (req, res, next) => {
+const createStudent = async (req, res, next) => {
+    // Validate input
+    await Promise.all(validateStudent.map(validation => validation.run(req)));
+    handleValidationErrors(req, res, next);
 
     const student = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        dateOfBirth: req.body.dateofBirth,
+        dateOfBirth: req.body.dateOfBirth,
         gender: req.body.gender,
         physicalAddress: req.body.physicalAddress,
         phone: req.body.phone,
@@ -42,12 +45,12 @@ const createStudent  = async (req, res, next) => {
 
     try {
         const db = mongodb.getDatabase();
-        const response = await db.collection('students').insertOne(order);
+        const response = await db.collection('students').insertOne(student);
 
         if (response.acknowledged) {
             res.status(201).json({ _id: response.insertedId, ...student });
         } else {
-            res.status(500).json({ message: "Error creating a student..." });
+            res.status(500).json({ message: "Error creating a student" });
         }
     } catch (err) {
         next(err);
@@ -55,12 +58,15 @@ const createStudent  = async (req, res, next) => {
 };
 
 const updateStudent = async (req, res, next) => {
-    
+    // Validate input
+    await Promise.all(validateStudent.map(validation => validation.run(req)));
+    handleValidationErrors(req, res, next);
+
     const studentId = new ObjectId(req.params.id);
-    const updateStudent = {
+    const updatedStudent = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        dateOfBirth: req.body.dateofBirth,
+        dateOfBirth: req.body.dateOfBirth,
         gender: req.body.gender,
         physicalAddress: req.body.physicalAddress,
         phone: req.body.phone,
@@ -69,7 +75,10 @@ const updateStudent = async (req, res, next) => {
 
     try {
         const db = mongodb.getDatabase();
-        const response = await db.collection('students').updateOne({ _id: studentId }, { $set: updateStudent });
+        const response = await db.collection('students').updateOne(
+            { _id: studentId },
+            { $set: updatedStudent }
+        );
 
         if (response.modifiedCount > 0) {
             res.status(204).send();
@@ -82,7 +91,6 @@ const updateStudent = async (req, res, next) => {
 };
 
 const deleteStudent = async (req, res, next) => {
-
     try {
         const studentId = new ObjectId(req.params.id);
         const db = mongodb.getDatabase();
@@ -91,7 +99,7 @@ const deleteStudent = async (req, res, next) => {
         if (response.deletedCount > 0) {
             res.status(204).send();
         } else {
-            res.status(404).json({ message: "Student not found." });
+            res.status(404).json({ message: "Student not found" });
         }
     } catch (err) {
         next(err);
