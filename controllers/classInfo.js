@@ -1,6 +1,6 @@
 const { ObjectId } = require('mongodb');
 const mongodb = require('../data/database');
-const { validateClassInfo, handleValidationErrors } = require('../helpers/validate');
+const { validateClassInfo, handleValidationErrors } = require('../middleware/validate');
 
 const getAllClassInfo = async (req, res, next) => {
     try {
