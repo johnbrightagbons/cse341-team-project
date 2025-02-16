@@ -40,7 +40,7 @@ mongoose.connect(process.env.MONGODB_URL)
 // Configure CORS to allow credentials (cookies) to be sent.
  // 'http://localhost:3000' with your actual Swagger UI origin if needed.
 app.use(cors({
-  origin: 'https://cse341project2-8qb2.onrender.com', // adjust if your client is hosted elsewhere
+  origin: 'https://cse341-team-project-xt32.onrender.com', // adjust if your client is hosted elsewhere
   credentials: true,
 }));
 
