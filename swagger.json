@@ -5,7 +5,7 @@
       "description": "API for managing Academic Details, Class Info, Finances and Students",
       "version": "1.0.0"
     },
-    "host": "https://cse341-team-project-xt32.onrender.com",
+    "host": "cse341-team-project-xt32.onrender.com",
     "basePath": "/",
     "schemes": ["https"],
     "consumes": ["application/json"],
