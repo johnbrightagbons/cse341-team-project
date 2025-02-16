@@ -42,7 +42,7 @@ mongoose.connect(process.env.MONGODB_URL)
 app.use(cors({
   origin: 'https://cse341-team-project-xt32.onrender.com', // adjust if your client is hosted elsewhere
   credentials: true,
-  llowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Session configuration using MongoDB as the store
@@ -127,8 +127,7 @@ app.use((req, res, next) => {
   //res.json({ message: "You have access to this protected route", user: req.user });
 //});
 
-// Mount additional routes.
-app.use('/', routes);
+
 
 // Error handling middleware (should be last).
 app.use(errorHandler);
