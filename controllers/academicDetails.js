@@ -5,8 +5,8 @@ const mongodb = require('../data/database');
 const getAllDetails = async (req, res, next) => {
     try {
         const db = mongodb.getDatabase();
-        const details = await db.collection('academicDetails').find().toArray();
-        res.status(200).json(academicdetails);
+        const academicDetails = await db.collection('academicDetails').find().toArray();
+        res.status(200).json(academicDetails);
     } catch (err) {
         next(err);
     }
