@@ -1,13 +1,12 @@
 const { ObjectId } = require('mongodb');
 const mongodb = require('../data/database');
-const { validateFinances, handleValidationErrors } = require('../middleware/validate');
+const { validationResult} = require('express-validator');
 
 const getAllFinances = async (req, res, next) => {
     try {
         const db = mongodb.getDatabase();
         const finances = await db.collection('finances').find().toArray();
         res.status(200).json(finances);
-        console.log('Retrieved finances:', finances); // Debug log
     } catch (err) {
         next(err);
     }
@@ -30,10 +29,10 @@ const getFinances = async (req, res, next) => {
 };
 
 const createFinances = async (req, res, next) => {
-    // Validate input
-    await Promise.all(validateFinances.map(validation => validation.run(req)));
-    handleValidationErrors(req, res, next);
-
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    } 
     const finances = {
         tuitionBalance: req.body.tuitionBalance,
         scholarships: req.body.scholarships,
@@ -55,10 +54,10 @@ const createFinances = async (req, res, next) => {
 };
 
 const updateFinances = async (req, res, next) => {
-    // Validate input
-    await Promise.all(validateFinances.map(validation => validation.run(req)));
-    handleValidationErrors(req, res, next);
-
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    } 
     const financeId = new ObjectId(req.params.id);
     const updatedFinances = {
         tuitionBalance: req.body.tuitionBalance,

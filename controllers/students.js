@@ -1,6 +1,6 @@
 const { ObjectId } = require('mongodb');
 const mongodb = require('../data/database');
-const { validateStudent, handleValidationErrors } = require('../middleware/validate');
+
 
 const getAllStudents = async (req, res, next) => {
     try {
@@ -29,9 +29,10 @@ const getStudent = async (req, res, next) => {
 };
 
 const createStudent = async (req, res, next) => {
-    // Validate input
-    await Promise.all(validateStudent.map(validation => validation.run(req)));
-    handleValidationErrors(req, res, next);
+    const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        } 
 
     const student = {
         firstName: req.body.firstName,
@@ -58,9 +59,10 @@ const createStudent = async (req, res, next) => {
 };
 
 const updateStudent = async (req, res, next) => {
-    // Validate input
-    await Promise.all(validateStudent.map(validation => validation.run(req)));
-    handleValidationErrors(req, res, next);
+    const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        } 
 
     const studentId = new ObjectId(req.params.id);
     const updatedStudent = {

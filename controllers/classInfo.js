@@ -1,11 +1,12 @@
 const { ObjectId } = require('mongodb');
 const mongodb = require('../data/database');
-const { validateClassInfo, handleValidationErrors } = require('../middleware/validate');
+const { validationResult} = require('express-validator');
+
 
 const getAllClassInfo = async (req, res, next) => {
     try {
         const db = mongodb.getDatabase();
-        const classInfo = await db.collection('class').find().toArray();
+        const classInfo = await db.collection('classInfo').find().toArray();
         res.status(200).json(classInfo);
     } catch (err) {
         next(err);
@@ -16,7 +17,7 @@ const getClassInfo = async (req, res, next) => {
     try {
         const classId = new ObjectId(req.params.id);
         const db = mongodb.getDatabase();
-        const classInfo = await db.collection('class').findOne({ _id: classId });
+        const classInfo = await db.collection('classInfo').findOne({ _id: classId });
 
         if (!classInfo) {
             return res.status(404).json({ message: 'Class not found' });
@@ -29,9 +30,10 @@ const getClassInfo = async (req, res, next) => {
 };
 
 const createClassInfo = async (req, res, next) => {
-    // Validate input
-    await Promise.all(validateClassInfo.map(validation => validation.run(req)));
-    handleValidationErrors(req, res, next);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    } 
 
     const classInfo = {
         currentCourses: req.body.currentCourses,
@@ -42,7 +44,7 @@ const createClassInfo = async (req, res, next) => {
 
     try {
         const db = mongodb.getDatabase();
-        const response = await db.collection('class').insertOne(classInfo);
+        const response = await db.collection('classInfo').insertOne(classInfo);
 
         if (response.acknowledged) {
             res.status(201).json({ _id: response.insertedId, ...classInfo });
@@ -55,9 +57,10 @@ const createClassInfo = async (req, res, next) => {
 };
 
 const updateClassInfo = async (req, res, next) => {
-    // Validate input
-    await Promise.all(validateClassInfo.map(validation => validation.run(req)));
-    handleValidationErrors(req, res, next);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    } 
 
     const classId = new ObjectId(req.params.id);
     const updatedClassInfo = {
@@ -69,7 +72,7 @@ const updateClassInfo = async (req, res, next) => {
 
     try {
         const db = mongodb.getDatabase();
-        const response = await db.collection('class').updateOne(
+        const response = await db.collection('classInfo').updateOne(
             { _id: classId },
             { $set: updatedClassInfo }
         );
@@ -88,7 +91,7 @@ const deleteClassInfo = async (req, res, next) => {
     try {
         const classId = new ObjectId(req.params.id);
         const db = mongodb.getDatabase();
-        const response = await db.collection('class').deleteOne({ _id: classId });
+        const response = await db.collection('classInfo').deleteOne({ _id: classId });
 
         if (response.deletedCount > 0) {
             res.status(204).send();
