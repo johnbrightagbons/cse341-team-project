@@ -133,7 +133,7 @@ app.use((req, res, next) => {
 app.use(errorHandler);
 
 // --- DATABASE CONNECTION & SERVER START --- //
-mongodb.initDb((err) => {
+mongodb.mongoConnect((err) => {
   if (err) {
     console.error('❌ Failed to connect to the database:', err);
   } else {
