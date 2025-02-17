@@ -7,6 +7,7 @@ const getAllFinances = async (req, res, next) => {
         const db = mongodb.getDatabase();
         const finances = await db.collection('finances').find().toArray();
         res.status(200).json(finances);
+        console.log('Retrieved finances:', finances); // Debug log
     } catch (err) {
         next(err);
     }
