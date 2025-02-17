@@ -1,35 +1,26 @@
-const dotenv = require('dotenv');
-dotenv.config();
-
+// cse341project2/util/database.js
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
-let database;
+let _db;
 
-const initDb = (callback) => {
-    if (database) {
-        console.log('Db is already initialized');
-        return callback(null, database);
-    }
-    MongoClient.connect(process.env.MONGODB_URL)
-        .then(client => {
-            console.log('Connected to MongoDB');
-            database = client.db(process.env.schoolproject);
-            callback(null, database);
-        })
-        .catch(err => {
-            console.error('Failed to connect to MongoDB', err);
-            callback(err);
-        });
+const mongoConnect = callback => {
+  MongoClient.connect(process.env.MONGODB_URL)
+    .then(client => {
+      console.log('Connected to database!');
+      // Here, the correct DB name is used from the .env file:
+      _db = client.db(process.env.DB_NAME);
+      callback();
+    })
+    .catch(err => {
+      console.log(err);
+      throw err;
+    });
 };
 
-const getDatabase = () => {
-    if (!database) {
-        throw Error('Db is not initialized');
-    }
-    return database;
+const getDb = () => {
+  if (_db) return _db;
+  throw 'No database found!';
 };
 
-module.exports = {
-    initDb,
-    getDatabase
-};
+exports.mongoConnect = mongoConnect;
+exports.getDb = getDb;
