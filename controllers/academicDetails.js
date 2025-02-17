@@ -1,6 +1,6 @@
 const { ObjectId } = require('mongodb');
 const mongodb = require('../data/database');
-//const { validateAcademicDetails, handleValidationErrors } = require('../middleware/validate');
+const { validationResult} = require('express-validator');
 
 const getAllDetails = async (req, res, next) => {
     try {
@@ -29,10 +29,10 @@ const getStudentDetails = async (req, res, next) => {
 };
 
 const createDetails = async (req, res, next) => {
-    // Validate input
-    await Promise.all(validateAcademicDetails.map(validation => validation.run(req)));
-    handleValidationErrors(req, res, next);
-
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     const details = {
         major: req.body.major,
         minor: req.body.minor,
@@ -44,7 +44,7 @@ const createDetails = async (req, res, next) => {
 
     try {
         const db = mongodb.getDatabase();
-        const response = await db.collection('academicDetails').insertOne(academicdetails);
+        const response = await db.collection('academicDetails').insertOne(details);
 
         if (response.acknowledged) {
             res.status(201).json({ _id: response.insertedId, ...details });
@@ -57,9 +57,10 @@ const createDetails = async (req, res, next) => {
 };
 
 const updateDetails = async (req, res, next) => {
-    // Validate input
-    await Promise.all(validateAcademicDetails.map(validation => validation.run(req)));
-    handleValidationErrors(req, res, next);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }  
 
     const studentId = new ObjectId(req.params.id);
     const updatedDetails = {
