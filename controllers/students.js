@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongodb');
 const mongodb = require('../data/database');
+const { validationResult } = require('express-validator');
 
 
 const getAllStudents = async (req, res, next) => {
