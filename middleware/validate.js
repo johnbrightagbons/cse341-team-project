@@ -78,10 +78,6 @@ const validateAcademicDetails = [
   body('gpa')
   .isFloat({ min: 0, max: 4 }).withMessage('GPA must be a number between 0 and 4'),
 
-// Check 'attendance' as a float between 0 and 100 (adjust if needed)
-body('attendance')
-  .isFloat({ min: 0, max: 100 }).withMessage('Attendance must be a number between 0 and 100'),
-
 // Ensure 'major', 'minor', 'faculty', and 'enrollmentStatus' are strings (non-empty if needed)
 body('major')
   .isString().withMessage('Major must be a valid string')
