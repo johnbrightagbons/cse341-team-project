@@ -2,14 +2,47 @@ const { body, validationResult } = require('express-validator');
 
 // Student validation rules
 const validateStudent = [
-    body('firstName').notEmpty().withMessage('First name is required'),
-    body('lastName').notEmpty().withMessage('Last name is required'),
-    body('dateOfBirth').isDate().withMessage('Invalid date of birth'),
-    body('gender').isIn(['Male', 'Female', 'Other']).withMessage('Invalid gender'),
-    body('physicalAddress').notEmpty().withMessage('Address is required'),
-    body('phone').isMobilePhone().withMessage('Invalid phone number'),
-    body('email').isEmail().withMessage('Invalid email address')
+  body('firstName')
+    .isString().withMessage('First name must be a string')
+    .notEmpty().withMessage('First name is required'),
+
+  body('lastName')
+    .isString().withMessage('Last name must be a string')
+    .notEmpty().withMessage('Last name is required'),
+
+  body('dateOfBirth')
+    .isDate().withMessage('Date of birth must be a valid date')
+    .custom((value) => {
+      // Additional check: Ensure the date is not in the future
+      if (new Date(value) > new Date()) {
+        throw new Error('Date of birth cannot be in the future');
+      }
+      return true;
+    }),
+
+  body('gender')
+    .isString().withMessage('Gender must be a string')
+    .isIn(['Male', 'Female', 'Other']).withMessage('Gender must be one of "Male", "Female", or "Other"')
+    .notEmpty().withMessage('Gender is required'),
+
+  body('physicalAddress')
+    .isString().withMessage('Physical address must be a string')
+    .notEmpty().withMessage('Physical address is required'),
+
+  body('phone')
+    .isString().withMessage('Phone number must be a string')
+    .notEmpty().withMessage('Phone number is required')
+    .matches(/^[0-9]{10}$/).withMessage('Phone number must be 10 digits long'),
+
+  body('email')
+    .isString().withMessage('Email must be a string')
+    .notEmpty().withMessage('Email is required')
+    .isEmail().withMessage('Invalid email format')
 ];
+
+
+
+
 
 // Class Info validation rules
 const validateClassInfo = [
