@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
+
 
 router.use('/academicDetails', require('./academicDetails'));
 router.use('/classInfo', require('./classInfo'));
