@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { body, param } = require('express-validator'); // Import validators
 const { validateStudent, handleValidationErrors 
-} = require('..middleware/validation');
+} = require('..middleware/validate');
 //const { isAuthenticated } = require('../middleware/authenticate');
 const { getAllStudents, getStudent, createStudent, updateStudent, deleteStudent } = require('../controllers/students');
 
