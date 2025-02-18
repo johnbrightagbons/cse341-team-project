@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { body, param } = require('express-validator'); // Import validators
-const { 
-    validateStudent, 
-    handleValidationErrors 
-} = require('../validation');
+const { validateStudent, handleValidationErrors 
+} = require('..middleware/validation');
 //const { isAuthenticated } = require('../middleware/authenticate');
 const { getAllStudents, getStudent, createStudent, updateStudent, deleteStudent } = require('../controllers/students');
-const { validateStudent } = require('../middleware/validate');
 
 // Middleware to validate MongoDB ObjectId for routes with ':id'
 const validateId = [
