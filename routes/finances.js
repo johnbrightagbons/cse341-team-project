@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { body, param } = require('express-validator'); // Import validators
-//const { isAuthenticated } = require('../middleware/authenticate');
+const { isAuthenticated } = require('../middleware/authenticate');
 const { getAllFinances, getFinances, createFinances, updateFinances, deleteFinances } = require('../controllers/finances');
 const { validateFinances, handleValidationErrors } = require('../middleware/validate');
 
@@ -14,9 +14,9 @@ const validateId = [
 
 router.get('/', getAllFinances);
 router.get('/:id',validateId, getFinances);
-router.post('/',validateFinances,handleValidationErrors ,createFinances);
-router.put('/:id',validateId,handleValidationErrors, updateFinances);
-router.delete('/:id',validateId, deleteFinances);
+router.post('/',validateFinances,handleValidationErrors ,isAuthenticated,createFinances);
+router.put('/:id',validateId,handleValidationErrors,isAuthenticated, updateFinances);
+router.delete('/:id',validateId,isAuthenticated, deleteFinances);
 
 
 module.exports = router;

@@ -5,7 +5,7 @@ const {
   validateAcademicDetails,
   handleValidationErrors 
 } = require('../middleware/validate'); // Import validation middleware
-//const { isAuthenticated } = require('../middleware/authenticate');
+const { isAuthenticated } = require('../middleware/authenticate');
 const { getAllDetails, getStudentDetails, createDetails, updateDetails, deleteDetails } = require('../controllers/academicDetails');
 
 // Middleware to validate MongoDB ObjectId for routes with ':id'
@@ -16,10 +16,10 @@ const validateId = [
 
 
 router.get('/',  getAllDetails);
-router.get('/:id',validateId,  getStudentDetails);
-router.post('/',validateAcademicDetails,handleValidationErrors , createDetails);
-router.put('/:id',validateId,handleValidationErrors,  updateDetails);
-router.delete('/:id',validateId,  deleteDetails);
+router.get('/:id',validateId,   getStudentDetails);
+router.post('/',validateAcademicDetails,handleValidationErrors ,isAuthenticated, createDetails);
+router.put('/:id',validateId,handleValidationErrors,isAuthenticated,  updateDetails);
+router.delete('/:id',validateId,isAuthenticated,  deleteDetails);
 
 
 module.exports = router;
