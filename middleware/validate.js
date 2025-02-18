@@ -122,7 +122,6 @@ const validateFinances = [body('tuitionBalance')
     .notEmpty().withMessage('Payment Status cannot be empty')
     .isIn(['Paid', 'Pending', 'Unpaid']).withMessage('Payment Status must be one of "Paid", "Pending", or "Unpaid"')
 ];
-    const { body } = require('express-validator');
 
 // Middleware to handle validation errors
 const handleValidationErrors = (req, res, next) => {
