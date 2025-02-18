@@ -4,7 +4,7 @@ const { body, param } = require('express-validator'); // Import validators
 const { 
   validateAcademicDetails,
   handleValidationErrors 
-} = require('../validation'); // Import validation middleware
+} = require('../middleware/validate'); // Import validation middleware
 //const { isAuthenticated } = require('../middleware/authenticate');
 const { getAllDetails, getStudentDetails, createDetails, updateDetails, deleteDetails } = require('../controllers/academicDetails');
 
