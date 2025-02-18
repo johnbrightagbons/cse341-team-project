@@ -107,11 +107,12 @@ body('admissionDate')
 const validateFinances = [body('tuitionBalance')
     .isFloat({ min: 0 }).withMessage('Tuition balance must be a non-negative number'),
 
-  body('scholarships')
-    .isArray().withMessage('Scholarships must be an array')
-    .optional({ checkFalsy: true }) // Optional but must be an array if provided
-    .custom((value) => value.every((item) => typeof item === 'string'))
-    .withMessage('Each item in Scholarships must be a string'),
+    body('scholarships')
+  .isString().withMessage('Scholarship must be a string')
+  .optional({ checkFalsy: true }) // Optional if no scholarship is provided
+  .notEmpty().withMessage('Scholarship cannot be empty if provided'),
+
+  
 
   body('paymentStatus')
     .isString().withMessage('Payment Status must be a valid string')
