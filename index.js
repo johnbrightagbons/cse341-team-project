@@ -18,7 +18,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: ['https://cse341-team-project-xt32.onrender.com', 'http://localhost:3000'],
+  origin: ['https://cse341-team-project-xt32.onrender.com'],
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
