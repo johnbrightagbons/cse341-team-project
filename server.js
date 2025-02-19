@@ -24,13 +24,6 @@ const PORT = process.env.PORT || 10000;
 // Parse JSON request bodies
 app.use(bodyParser.json());
 
-// Log environment variables to verify they're loaded correctly
-console.log('MONGODB_URL:', process.env.MONGODB_URL);
-console.log('DB_NAME:', process.env.DB_NAME);
-console.log('GITHUB_CLIENT_SECRET:', process.env.GITHUB_CLIENT_SECRET);
-console.log('GITHUB_CLIENT_ID:', process.env.GITHUB_CLIENT_ID);
-console.log('CALLBACK_URL:', process.env.CALLBACK_URL);
-
 // CORS configuration: allow your deployed domain and local dev
 app.use(cors({
   origin: ['https://cse341-team-project-xt32.onrender.com', 'http://localhost:3000'],
