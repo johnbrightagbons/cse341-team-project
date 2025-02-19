@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
+
 // Middleware to log session and user data
 router.use((req, res, next) => {
   console.log("Session data:", req.session);
