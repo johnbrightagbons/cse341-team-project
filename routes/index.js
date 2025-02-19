@@ -16,7 +16,7 @@ router.use('/finances', require('./finances'));
 router.use('/students', require('./students'));
 
 // Login route: triggers GitHub authentication
-router.get('/login', passport.authenticate('github', { scope: ['user:email'] }));
+router.get('/login', passport.authenticate('github', { scope: ['user:profile'] }));
 
 // GitHub callback route
 router.get('/github/callback', 
